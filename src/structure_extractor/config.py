@@ -57,3 +57,16 @@ class Configuration:
         '2013_Manila_floods':'Flood',
         '2013_Typhoon_Yolanda':'Typhoon'
     })
+
+
+    country_mapping = dict({
+        'UK':"United Kingdom",
+        'Syria':"Syrian Arab Republic",
+        'Russia':"Russian Federation",
+        'Scotland':"United Kingdom",
+        'Venezuela':"Venezuela, Bolivarian Republic of",
+        'VZL':"Venezuela, Bolivarian Republic of",
+        'VZ':"Venezuela, Bolivarian Republic of" ,
+        'SP':"Spain",
+         'España':"Spain"
+    })

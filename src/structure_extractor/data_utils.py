@@ -13,6 +13,7 @@ def unzip_from_url(src, dest="./"):
     zip.extractall(dest)
     print("Download and Unzip complete")
 
+
 def combine_csv_files(folder_path, retrieve_label=True, retrieve_year=True,
                       retrieve_country=True, retrieve_event=True, min_tweet_len=6):
     df = pd.DataFrame()

@@ -1,6 +1,7 @@
 import unittest
 
 import src.structure_extractor.data_utils as du
+import src.structure_extractor.parsers as p
 
 
 class TestStructureExtractor(unittest.TestCase):
@@ -37,4 +38,67 @@ class TestStructureExtractor(unittest.TestCase):
         message = "RT @BBCBreaking: Photo shows #helicopter crash at #Clutha pub in Glasgow http://t.co/cYMa37HdjM &amp; http://t.co/gY03CIFj80"
         expected = 9
         actual = du._get_message_length(message)
+        self.assertEqual(expected, actual)
+
+    
+    def test_country_name_1(self):
+        text = "AU"
+        expected = "Australia"
+        actual = p._get_country_name(text)
+        self.assertEqual(expected, actual)
+
+
+    def test_country_name_2(self):
+        text = "BRA"
+        expected = "Brazil"
+        actual = p._get_country_name(text)
+        self.assertEqual(expected, actual)
+
+
+    def test_country_name_3(self):
+        text = "Republic of Malta"
+        expected = "Malta"
+        actual = p._get_country_name(text)
+        self.assertEqual(expected, actual)
+
+    
+    def test_find_country_1(self):
+        text = "The UK is a nice country, like España"
+        expected = "United Kingdom"
+        actual = p._find_country_name(text)
+        self.assertEqual(expected, actual)
+
+
+    def test_find_country_2(self):
+        text = "Nutbush city limits"
+        expected = "Country Not Found"
+        actual = p._find_country_name(text)
+        self.assertEqual(expected, actual)
+
+    
+    def test_parse_label_country_1(self):
+        text = "This is Australia"
+        expected = "Australia"
+        actual = p.parse_label_country(text)
+        self.assertEqual(expected, actual)
+
+
+    def test_parse_label_country_2(self):
+        text = "Paris, France"
+        expected = "France"
+        actual = p.parse_label_country(text)
+        self.assertEqual(expected, actual)
+
+
+    def test_parse_label_country_3(self):
+        text = "DE"
+        expected = "Germany"
+        actual = p.parse_label_country(text)
+        self.assertEqual(expected, actual)
+
+
+    def test_parse_label_country_4(self):
+        text = "Not a real country"
+        expected = "Country Not Found"
+        actual = p.parse_label_country(text)
         self.assertEqual(expected, actual)
