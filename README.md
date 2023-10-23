@@ -13,8 +13,37 @@ There are a number of open-source LLM's available to the public. In this project
 The Llama2-7B-Chat LLM is part of a family of open-source large language models created by Meta (Touvron et al, 2023). The Llama2 models were made available to the public in July 2023. Llama2-7B-Chat is a 7 billion parameter model pretrained on 2 trillion tokens of data from publicly available sources.
 
 ## Prompting
-Responses from LLMs are only as good as the prompts they are given.
+Responses from LLMs are only as good as the prompts they are given. There are multiple prompting techniques and they include:
 
+- Zero-shot prompting,
+- Few-shot prompting
+- Chain of Thought prompting
+
+For this project zero-shot prompting was used.
+
+### Zero-Shot Prompting
+LLMs can respond to prompts despite having never seen the instructions before. When the prompt contains no other information other than the instruction, this is called _zero-shot prompting_. As an example:
+
+_Prompt_
+
+> Can you give me the sentiment for the following snippet:
+>
+> Nothing lower than fire looters: NSW cops http://t.co/ftZYbYy8u2
+
+_Response_
+
+> Negative
+
+In this example the LLM has been asked to provide a sentiment score without any further information, or context. This is zero-shot prompting at work.
+
+## Experiments
+### Experiment 1 - Informativeness
+
+### Experiment 2 - Information Type
+
+### Experiment 3 - Crisis Type
+
+### Experiment 4 - Country
 
 ## Installing
 

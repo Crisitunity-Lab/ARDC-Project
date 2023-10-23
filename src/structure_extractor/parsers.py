@@ -3,6 +3,7 @@ import re
 
 import src.structure_extractor.config as cfg
 
+
 def parse_label_country(text):
     # Remove the word "ISO" from the string
     text = text.replace("ISO", "")
@@ -44,8 +45,6 @@ def parse_label_informativenss(text):
     return label
   
   return "Unknown"
-
-
 
 
 def parse_label_infotype(text):
