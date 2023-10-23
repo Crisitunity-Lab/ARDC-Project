@@ -2,7 +2,17 @@
 Crisis management is a complex problem to which responses have real world impacts. Often much of the data that is provided in a crsis is unstructured making it hard to retieve meaningful information; information that could be used by authorities and agencies to provide better services and care. This project aims to take unstructured data, generated during a crisis, and generate meaningful information. 
 
 ## Dataset
-For this project the CrisisLexT26 dataset was used (Olteanu et al, 2015). This data is publicly available from [here](https://github.com/sajao/CrisisLex/blob/master/releases/CrisisLexT26-v1.0.zip?raw=true).The dataset contains ~28,000 labelled tweets from 26 crisis events that occurred in 2012 and 2013. Tweets were labelled with informativeness, information type and information source using crowdsourcing.
+For this project the CrisisLexT26 dataset was used (Olteanu et al, 2015). This data is publicly available from [here](https://github.com/sajao/CrisisLex/blob/master/releases/CrisisLexT26-v1.0.zip?raw=true).The dataset contains ~28,000 labelled tweets from 26 crisis events that occurred in 2012 and 2013. Tweets were labelled with informativeness, information type and information source through crowdsourcing.
+
+### Data Cleansing
+To prepare data for analysis several tasks were undertaken to enrich and clean the data obtained. The cleansing tasks undertaken were:
+
+- Country Codes: Adding country codes to the dataset,
+- Crisis Type: Adding crisis type to the dataset, and
+- Tweet Length: Removing rows with a message length less than 5 words, although this is configurable when running [data_utils.combine_csv_files](https://github.com/Crisitunity-Lab/ARDC-Project/blob/163d4c3a586200bf334c7311dff5b548218abc53/src/structure_extractor/data_utils.py#L17).
+
+### Data Collection Example
+An example of how to collect the data source can be found [here](https://github.com/Crisitunity-Lab/ARDC-Project/blob/main/Notebooks/Example_Data_Collection.ipynb).
 
 ## Large Language Models
 Large language models (LLMs) are deep learning systems designed to mimic humans. LLMs are trained on a large corpus of text and are designed to predict the next word in a sentence, or paragraph. This allows them to communicate fluently with humans in a natural way. LLM’s have performed well on MBA exams and have performed at, or near, the passing threshold for the United States Medical Licencing Exam (Kung, 2023; Terwiesch, 2023). This suggests LLMs can perform well on complex tasks. 
