@@ -20,6 +20,5 @@ jobs:
           pip install -r requirements.txt
       - name: Run unittest
         run: |
-          pip install unittest
           python -m unittest test.unit_test.unit_test_structure_extractor
             
