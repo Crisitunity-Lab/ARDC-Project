@@ -102,3 +102,33 @@ class TestStructureExtractor(unittest.TestCase):
         expected = "Country Not Found"
         actual = p.parse_label_country(text)
         self.assertEqual(expected, actual)
+
+
+    def test_clean_info_type_text(self):
+        text = "#DollyTheSheep has a .fullstop"
+        chars_to_remove = [".", "#"]
+        expected = "DollyTheSheep has a fullstop"
+        actual = p._clean_info_type_text(text, chars_to_remove)
+        self.assertEqual(expected, actual)
+
+    
+    def test_get_position(self):
+        text = "This is some text with a label"
+        search_str = "label"
+        expected = 25
+        actual = p._get_position(text, search_str)
+        self.assertEqual(expected, actual)
+
+    
+    def test_parse_label_infotype_1(self):
+        text = 'Label: "Affected residents" there are people everywhere' 
+        expected = "Affected residents"
+        actual = p.parse_label_infotype(text)
+        self.assertEqual(expected, actual)
+
+
+    def test_parse_label_infotype_2(self):
+        text = 'Nothing to see here, move along' 
+        expected = "Unknown"
+        actual = p.parse_label_infotype(text)
+        self.assertEqual(expected, actual)

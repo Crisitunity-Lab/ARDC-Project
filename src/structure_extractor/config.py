@@ -76,3 +76,13 @@ class Configuration:
         "Related and informative",
         "Not related"
         ]
+    
+    information_type_labels =  [
+        "Caution and advice for residents",
+        "Affected residents",
+        "Infrastructure and utilities damage",
+        "Donations or volunteering",
+        "expressing Sympathy and support for affected",
+        "other useful information",
+        "Not applicable"
+        ]
