@@ -1,4 +1,6 @@
 import pycountry
+import re
+
 import src.structure_extractor.config as cfg
 
 def parse_label_country(text):
@@ -11,6 +13,31 @@ def parse_label_country(text):
        country = _find_country_name(text)
         
     return country
+
+
+def parse_label_informativenss(text):
+  idx = text.find("Label:")
+  if idx != -1:
+    second_idx = text.find(":", idx + 6)
+    if second_idx != -1:
+      substring = text[idx + 6:second_idx]
+      
+      for label in cfg.Configuration.informativeness_labels:
+        if label.lower() in substring.lower():
+          label = label.replace('- ', '')
+          return label
+      
+  for label in cfg.Configuration.informativeness_labels:
+    if label.lower() in text.lower():
+      label = label.replace('- ', '')
+      return label
+
+  value = re.findall(r'"(.*?)"', text)
+  if value:
+    label = value[0].replace('- ', '')
+    return label
+  
+  return "Error"
 
 
 def _get_country_name(text):

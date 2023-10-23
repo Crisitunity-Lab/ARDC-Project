@@ -70,3 +70,9 @@ class Configuration:
         'SP':"Spain",
          'España':"Spain"
     })
+
+    informativeness_labels = [
+        "Related but not informative",
+        "Related and informative",
+        "Not related"
+        ]
