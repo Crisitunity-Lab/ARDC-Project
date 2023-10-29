@@ -47,7 +47,27 @@ _Response_
 In this example the LLM has been asked to provide a sentiment score without any further information, or context. This is zero-shot prompting at work.
 
 ## Experiments
+As part of this project four experiments were run. These experiments investigated how well a LLM would perform labelling data and generating relevant metadata. The following fields were investigated:
+
+- **Informativeness**,
+- **Information Type**,
+- **Crisis Type**, and
+- **Country Impacted**.
+
+These experiments are explored in more detail below.
+
 ### Experiment 1 - Informativeness
+As the X platform is an open space for communication, not all messages about a crisis are informative or related. The informativeness field aims to provide a measure of how related to, and informative about, the crisis the message is. The four labels in the original dataset were:
+
+- Related and informative: the message contains information that aids understanding of the crisis,
+- Related - but not informative: the message refers to the crisis event but does not contain
+information that aids understanding of the crisis,
+- Not related: the tweet is not related to the crisis, and
+- Not applicable: informativeness not provided by the labeller
+
+As part of this project the Llama2-7B-Chat model was asked to categorise messages with one of the three labels provided in the source dataset.
+
+The overall accuracy of results from the informativeness experiment was **52.79%** with the __Related and informative__ category performing better than the others with a precision of **65.47%** and a recall of **67.23%**. The other categories performed worse with a precision of ~30%.
 
 ### Experiment 2 - Information Type
 
@@ -56,7 +76,7 @@ In this example the LLM has been asked to provide a sentiment score without any 
 ### Experiment 4 - Country
 
 ## Running
-
+An example on how to run the experiments is shown in [this](https://github.com/Crisitunity-Lab/ARDC-Project/blob/main/Notebooks/Example_Run_Experiments.ipynb) notebook. To run the notebook code users will need a [Hugging Face](https://huggingface.co/welcome) account and have been given permission from Meta to use the Llama2 models. Persmission can be granted by filling out [this](https://ai.meta.com/resources/models-and-libraries/llama-downloads/) form.
 
 ## References
 Kung, T. H., Cheatham, M., Medenilla, A., Sillos, C., De Leon, L., Elepaño, C., Madriaga, M., Aggabao, R., Diaz-Candido, G., Maningo, J., & Tseng, V. (2023) Performance of ChatGPT on USMLE: Potential for AI-assisted medical education using large language models. _PLOS Digital Health_, 2(2), [https://doi.org/10.1371/journal.pdig.0000198](https://doi.org/10.1371/journal.pdig.0000198)

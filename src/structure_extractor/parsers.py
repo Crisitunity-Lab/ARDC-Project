@@ -4,17 +4,6 @@ import re
 
 import src.structure_extractor.config as cfg
 
-# import pip
-
-
-# def import_or_install(package):
-#    try:
-#        __import__(package)
-#    except ImportError:
-#        pip.main(['install', package]) 
-
-
-# import_or_install("langchain")
 
 def parse_label_country(text):
     # Remove the word "ISO" from the string
