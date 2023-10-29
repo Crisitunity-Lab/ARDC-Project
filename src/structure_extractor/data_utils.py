@@ -45,7 +45,7 @@ def combine_csv_files(folder_path, retrieve_label=True, retrieve_year=True,
                     csv_df["year"]=_get_year_of_crisis(label)
 
                 if retrieve_country:
-                    csv_df["country_code"]=_get_country_of_crisis(label)
+                    csv_df["country"]=_get_country_of_crisis(label)
 
                 if retrieve_event:
                     csv_df["crisis_type"]=_get_crisis_type(label)
