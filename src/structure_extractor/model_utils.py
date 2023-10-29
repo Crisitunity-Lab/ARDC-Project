@@ -1,4 +1,5 @@
 from langchain import PromptTemplate, LLMChain
+import transformers
 from transformers import AutoTokenizer
 import torch
 
@@ -51,5 +52,5 @@ def generate_answer(text, prompt, llm):
     # Return answer from LLM
     llm_chain = LLMChain(prompt=prompt, llm=llm)
     output = llm_chain.run(text)
-    
+
     return output
