@@ -2,7 +2,7 @@ import inflect
 import pycountry
 import re
 
-import src.structure_extractor.config as cfg
+import config as cfg
 
 # import pip
 
