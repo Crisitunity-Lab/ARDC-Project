@@ -84,6 +84,43 @@ def parse_label_infotype(text):
     return "Unknown"
 
 
+def parse_label_crisistype(text):
+
+  substring = None
+  search_text = '"crisis": '
+  text_lower = text.lower()
+  search_text_len = len(search_text)
+
+  # Get position of "label:" in response (if it exists)
+  text_loc = _get_position(text_lower, search_text)
+  start_pos = text_loc + search_text_len
+
+  if text_loc != -1:
+
+    # Get text after crisis label
+    substring = text[start_pos:]
+
+    # Find the index of the closing double quote or closing quote
+    if substring.startswith('"'):
+      end_index = substring.find('"',1)
+
+      # If there is a second double quote get text between double quotes
+      if end_index != -1:
+        label = substring[1:end_index]
+      else:
+        label = "missing 2nd apostrophe"
+    else:
+      end_index = substring.find("\n")
+      if end_index != -1:
+        label = substring[:end_index]
+      else:
+        label = "missing '\n'"
+  else:
+    label = "Unknown"
+  
+  return label
+  
+
 def _get_country_name(text):
     for country in pycountry.countries:
       # Check if the country name is in the string

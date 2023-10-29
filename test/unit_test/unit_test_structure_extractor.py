@@ -132,3 +132,26 @@ class TestStructureExtractor(unittest.TestCase):
         expected = "Unknown"
         actual = p.parse_label_infotype(text)
         self.assertEqual(expected, actual)
+    
+
+    def test_parse_label_crisis_type_1(self):
+        text =   '{"Crisis": "Bushfire"}'
+        expected = "Bushfire"
+        actual = p.parse_label_crisistype(text)
+        self.assertEqual(expected, actual)
+    
+
+    def test_parse_label_crisis_type_2(self):
+        text =   '''{"Crisis": "Flood" 
+            Explanation: The text mentions "cleanup efforts" and "flood," 
+            indicating that a flood-related crisis is underway.}'''
+        expected = "Flood"
+        actual = p.parse_label_crisistype(text)
+        self.assertEqual(expected, actual)
+
+    
+    def test_parse_label_crisis_type_3(self):
+        text =   'Crisis Nothing to find here'
+        expected = "Unknown"
+        actual = p.parse_label_crisistype(text)
+        self.assertEqual(expected, actual)

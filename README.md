@@ -55,7 +55,7 @@ In this example the LLM has been asked to provide a sentiment score without any 
 
 ### Experiment 4 - Country
 
-## Installing
+## Running
 
 
 ## References
