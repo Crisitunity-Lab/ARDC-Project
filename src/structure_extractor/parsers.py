@@ -14,7 +14,7 @@ import src.structure_extractor.config as cfg
 #        pip.main(['install', package]) 
 
 
-# import_or_install("scikit-learn")
+# import_or_install("langchain")
 
 def parse_label_country(text):
     # Remove the word "ISO" from the string

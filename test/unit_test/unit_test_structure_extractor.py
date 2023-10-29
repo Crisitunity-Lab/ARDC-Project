@@ -1,6 +1,7 @@
 import unittest
 
 import src.structure_extractor.data_utils as du
+import src.structure_extractor.model_utils as mu
 import src.structure_extractor.parsers as p
 
 class TestStructureExtractor(unittest.TestCase):
@@ -174,4 +175,24 @@ class TestStructureExtractor(unittest.TestCase):
         text = "Floods"
         expected = "Flood"
         actual = p._singular_label(text)
+        self.assertEqual(expected, actual)
+
+ 
+    def test_get_prompt_template_1(self):
+        instruction = "Return values please."
+        system_prompt = "You are useful."
+        expected = "[INST]<>\nYou are useful.\n<>\n\nReturn values please.[/INST]"
+        actual = mu.get_prompt_template(instruction, system_prompt)
+        self.assertEqual(expected, actual)
+    
+
+    def test_get_prompt_template_2(self):
+        expected = "[INST]<>\nYou are a helpful, respectful and honest assistant. Always answer as helpfully as " \
+        "possible, while being safe. Your answers should not include any harmful, unethical, racist, sexist, "\
+        "toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and "\
+        "positive in nature. "\
+        "If a question does not make any sense, or is not factually coherent, explain why instead of answering " \
+        "something not correct. If you don't know the answer to a question, please don't share false information." \
+        "\n<>\n\n[/INST]"
+        actual = mu.get_prompt_template()
         self.assertEqual(expected, actual)

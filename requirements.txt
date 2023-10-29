@@ -6,3 +6,10 @@ pycountry==22.3.5
 requests==2.31.0
 seaborn
 scikit-learn
+
+# Required for Huggingface
+transformers
+accelerate
+einops
+langchain
+bitsandbytes
