@@ -67,13 +67,54 @@ information that aids understanding of the crisis,
 
 As part of this project the Llama2-7B-Chat model was asked to categorise messages with one of the three labels provided in the source dataset.
 
-The overall accuracy of results from the informativeness experiment was **52.79%** with the __Related and informative__ category performing better than the others with a precision of **65.47%** and a recall of **67.23%**. The other categories performed worse with a precision of ~30%.
+The overall accuracy of results from the informativeness experiment was **52.79%** with the _Related and informative_ category performing better than the others with a precision of **65.47%** and a recall of **67.23%**. The other categories performed worse with a precision of ~30%.
 
 ### Experiment 2 - Information Type
+The information type categorisation conveys information about the subject of the message. There are 7 labels in the source dataset. These are:
+
+- Affected individuals: includes information about missing people, people trapped or
+injured, casualties and reports from those directly impacted by the crisis,
+- Caution and advice: includes information on how to prepare for the crisis and safety
+warnings and advice during, and after, the event,
+- Donations and volunteering: includes information about how to donate money, goods
+or services and how best to help the community through volunteering,
+- Infrastructure and utilities: includes information about damage to buildings, traffic
+conditions and available medical services,
+- Other Useful Information: includes the location of emergency responders and
+information on conditions (e.g., flood level, smoke, wind speed),
+- Sympathy and support: includes messages of support from the those impacted and
+gratitude for assistance, and
+- Not labeled [sic]: no information type provided by the labeller.
+
+As with experiment 1, the Llama2-7B-Chat model was asked to categorise messages with one of the seven labels provided in the source dataset. 
+
+The overall accuracy of results from the information type experiment was **46.77%**. Again results varied across each of the labels. _Affected individuals_ had a recall of close to 80% but had a precision of just above 40%, whilst the labels _Donations and volunteering_ and _Symapthy and support_ had the opposite results.
 
 ### Experiment 3 - Crisis Type
+Each of the records in the dataset are about a crisis event that occurred at some point in 2012 or 2013. The crisis types in the dataset included:
+
+- Wildfire,
+- Earthquake,
+- Typhoon, and
+- Flood.
+
+The crisis type is different to the two prior experiments in that the data is metadata rather than crowd-sourced labels. In this experiment the model was asked to decided what type of crisis the message was about.
+
+The overall accuracy of results from the crisis type experiment was **69.48%**. For identifying the crisis type the model performed reasonably well on most crisis types with exceptions being Fire ([2013 Brazil nightclub fire](https://en.wikipedia.org/wiki/Kiss_nightclub_fire)) and Explosion ([2013 fertiliser explosion](https://en.wikipedia.org/wiki/West_Fertilizer_Company_explosion) in West Texas). In both these case the model struggled, especially when trying to standardise on a term. Is it an explosion, or a blast, or a factory explosion. This issue was also evident with typhoons which are also known as hurricanes and tropical cyclones, or by the name given to them. This impacted the results.
 
 ### Experiment 4 - Country
+The metadata of country impacted by thye crisis event was also captured and investigated. The source dataset covered crisis events in 14 countries with the United States having the most messages followed by the Philippines.
+
+The overall accuracy for country was **64.93%** but the variability of results between countries was high. For example, messages about events in the United States of America struggled. Often this was due to the the model, despite being asked explicitly for a country, returning a US state, or a city name. 
+
+## Notes
+The results contained here provide a view on how LLMs perform with little, or no, context. Whilst experimental results for some of the metadata fields these should be viewed with caution. The project team is not privvy to the data used to train the Llama2-7b-Chat model. The model is (most probably) aware of the crisis events researched here and this may have impacted the results. If the model was asked to identify the crisis type, or country impacted, for a more recent crisis event how would it perform? The project team can not say and more investigation into this is required.
+
+The model used in this experiment was largely dictated by access to compute and memory resources. Larger LLMs exist and may perform better on this task.
+
+The experiments were run using the pre-trained Llama2-7b-Chat model. The model used for experimentation was **not** trained on crisis specific data. This may be useful at improving results, especially where bespoke categories are required.
+
+The information contained in this repository is the work of the project team.
 
 ## Running
 An example on how to run the experiments is shown in [this](https://github.com/Crisitunity-Lab/ARDC-Project/blob/main/Notebooks/Example_Run_Experiments.ipynb) notebook. To run the notebook code users will need a [Hugging Face](https://huggingface.co/welcome) account and have been given permission from Meta to use the Llama2 models. Persmission can be granted by filling out [this](https://ai.meta.com/resources/models-and-libraries/llama-downloads/) form.
