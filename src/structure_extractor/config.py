@@ -68,7 +68,7 @@ class Configuration:
         'VZL':"Venezuela, Bolivarian Republic of",
         'VZ':"Venezuela, Bolivarian Republic of" ,
         'SP':"Spain",
-         'España':"Spain"
+        'España':"Spain"
     })
 
     informativeness_labels = [
@@ -196,3 +196,29 @@ class Configuration:
     "Guatemala quake":"Earthquake",
     "Bush fire":"Wildfire"
 })
+
+    response_mapping = dict({
+            'Wildfires': 'Wildfire',
+            'Bushfires': 'Wildfire',
+            'Bushfire': 'Wildfire',
+            'Na': 'Not labeled',
+            '[Na]': 'Not labeled',
+            'Flood':'Floods',
+            'Bombing': 'Bombings',
+            'Shooting': 'Shootings',  
+            "Not applicable": 'Not labeled',
+            "Other useful information":'Other Useful Information',
+            "Caution and advice for residents":'Caution and advice',
+            "Affected resident": 'Affected individuals',
+            "Infrastructure and utilities damage": 'Infrastructure and utilities',
+            "Donations and volunteering": 'Donations and volunteering',
+            "Donations or volunteering": 'Donations and volunteering',
+            "Expressing sympathy and support for affected": 'Sympathy and support',
+            "Warnings and advice for residents.": 'Caution and advice',
+            'Philipinnes': 'Philippines',
+            'Phillipines': 'Philippines',
+            'UK': 'United Kingdom',
+            'Venezuela': 'Venezuela, Bolivarian Republic of',
+            'Russia': 'Russian Federation',
+            'US': 'United States',
+        })

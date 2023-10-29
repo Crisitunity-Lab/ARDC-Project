@@ -3,7 +3,6 @@ import unittest
 import src.structure_extractor.data_utils as du
 import src.structure_extractor.parsers as p
 
-
 class TestStructureExtractor(unittest.TestCase):
 
     def test_year_calc(self):
@@ -40,7 +39,7 @@ class TestStructureExtractor(unittest.TestCase):
         actual = du._get_message_length(message)
         self.assertEqual(expected, actual)
 
-    
+
     def test_country_name_1(self):
         text = "AU"
         expected = "Australia"
@@ -104,11 +103,11 @@ class TestStructureExtractor(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
-    def test_clean_info_type_text(self):
+    def test_clean_text(self):
         text = "#DollyTheSheep has a .fullstop"
         chars_to_remove = [".", "#"]
         expected = "DollyTheSheep has a fullstop"
-        actual = p._clean_info_type_text(text, chars_to_remove)
+        actual = p._clean_text(text, chars_to_remove)
         self.assertEqual(expected, actual)
 
     
@@ -122,7 +121,7 @@ class TestStructureExtractor(unittest.TestCase):
     
     def test_parse_label_infotype_1(self):
         text = 'Label: "Affected residents" there are people everywhere' 
-        expected = "Affected residents"
+        expected = "Affected individuals"
         actual = p.parse_label_infotype(text)
         self.assertEqual(expected, actual)
 
@@ -132,11 +131,25 @@ class TestStructureExtractor(unittest.TestCase):
         expected = "Unknown"
         actual = p.parse_label_infotype(text)
         self.assertEqual(expected, actual)
+
+
+    def test_parse_label_infotype_3(self):
+        text = '"Affected residents"' 
+        expected = "Affected individuals"
+        actual = p.parse_label_infotype(text)
+        self.assertEqual(expected, actual)
+
+
+    def test_parse_label_infotype_4(self):
+        text = 'Label: "Godzilla"' 
+        expected = "Unknown"
+        actual = p.parse_label_infotype(text)
+        self.assertEqual(expected, actual)
     
 
     def test_parse_label_crisis_type_1(self):
         text =   '{"Crisis": "Bushfire"}'
-        expected = "Bushfire"
+        expected = "Wildfire"
         actual = p.parse_label_crisistype(text)
         self.assertEqual(expected, actual)
     
@@ -145,7 +158,7 @@ class TestStructureExtractor(unittest.TestCase):
         text =   '''{"Crisis": "Flood" 
             Explanation: The text mentions "cleanup efforts" and "flood," 
             indicating that a flood-related crisis is underway.}'''
-        expected = "Flood"
+        expected = "Floods"
         actual = p.parse_label_crisistype(text)
         self.assertEqual(expected, actual)
 
@@ -154,4 +167,11 @@ class TestStructureExtractor(unittest.TestCase):
         text =   'Crisis Nothing to find here'
         expected = "Unknown"
         actual = p.parse_label_crisistype(text)
+        self.assertEqual(expected, actual)
+    
+
+    def test_singular_label(self):
+        text = "Floods"
+        expected = "Flood"
+        actual = p._singular_label(text)
         self.assertEqual(expected, actual)

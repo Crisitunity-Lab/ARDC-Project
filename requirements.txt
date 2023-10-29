@@ -1,3 +1,8 @@
+inflect
+matplotlib
+numpy
 pandas
 pycountry==22.3.5
 requests==2.31.0
+seaborn
+sklearn

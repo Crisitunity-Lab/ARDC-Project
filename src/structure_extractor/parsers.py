@@ -1,8 +1,20 @@
+import inflect
 import pycountry
 import re
 
 import src.structure_extractor.config as cfg
 
+# import pip
+
+
+# def import_or_install(package):
+#    try:
+#        __import__(package)
+#    except ImportError:
+#        pip.main(['install', package]) 
+
+
+# import_or_install("scikit-learn")
 
 def parse_label_country(text):
     # Remove the word "ISO" from the string
@@ -19,7 +31,7 @@ def parse_label_country(text):
 def parse_label_informativenss(text):
 
   search_text = "Label:"
-  chars_to_remove = ["- "]
+  chars_to_remove = ["-","."]
   text_loc = _get_position(text, search_text)
   start_pos = text_loc + len(search_text)
 
@@ -30,18 +42,18 @@ def parse_label_informativenss(text):
       
       for label in cfg.Configuration.informativeness_labels:
         if label.lower() in substring.lower():
-          label = _clean_info_type_text(label, chars_to_remove)
+          label = _clean_text(label, chars_to_remove)
           return label
       
   for label in cfg.Configuration.informativeness_labels:
     if label.lower() in text.lower():
-      label = _clean_info_type_text(label, chars_to_remove)
+      label = _clean_text(label, chars_to_remove)
       return label
 
   value = re.findall(r'"(.*?)"', text)
   if value:
     label = value[0]
-    label = _clean_info_type_text(label, chars_to_remove)
+    label = _clean_text(label, chars_to_remove)
     return label
   
   return "Unknown"
@@ -51,12 +63,14 @@ def parse_label_infotype(text):
     
     # Remove period and hashtags from text
     chars_to_remove = [".", "#"]
-    text = _clean_info_type_text(text, chars_to_remove)
+    text = _clean_text(text, chars_to_remove)
 
     substring = None
+    output = None
     search_text = "label:"
     text_lower = text.lower()
     search_text_len = len(search_text)
+    value = re.findall(r'"(.*?)"', text)
 
     # Get position of "label:" in response (if it exists)
     text_loc = _get_position(text_lower, search_text)
@@ -68,20 +82,31 @@ def parse_label_infotype(text):
             substring = text[start_pos:second_loc]
             for label in cfg.Configuration.information_type_labels:
                 if label.lower() in substring.lower():
-                    return label 
+                    output = label
+                    break
     
-    for label in cfg.Configuration.information_type_labels:
-        if label.lower() in text_lower:
-            return label
-
-    value = re.findall(r'"(.*?)"', text)
+    # If substring not found in config then try finding a label in the whole text
+    if not(output):
+      for label in cfg.Configuration.information_type_labels:
+          if label.lower() in text_lower:
+              output = label
+              break
     
-    if value:
-        return value[0]
-    if substring:
-       return substring
+    if not(output) and value:
+        output = value[0]
+    
+    output = output or substring
 
-    return "Unknown"
+    # Set default for label
+    output = output or "Unknown"
+
+    # Remove plurals
+    output = _singular_label(output)
+
+     # Map response type to standard crisis type labels (e.g. Bushfire to Wildfire)
+    output = response_mapping(output)
+
+    return output
 
 
 def parse_label_crisistype(text):
@@ -106,20 +131,40 @@ def parse_label_crisistype(text):
 
       # If there is a second double quote get text between double quotes
       if end_index != -1:
-        label = substring[1:end_index]
+        output = substring[1:end_index]
       else:
-        label = "missing 2nd apostrophe"
+        output = "missing 2nd apostrophe"
     else:
       end_index = substring.find("\n")
       if end_index != -1:
-        label = substring[:end_index]
+        output = substring[:end_index]
       else:
-        label = "missing '\n'"
+        output = "missing '\n'"
   else:
-    label = "Unknown"
+    output = "Unknown"
+  
+  # If the output label is a plural change to singular (i.e. Floods = Flood).
+  # This is for standardising responses
+  prelim = _singular_label(output)
+
+  # Map response type to standard crisis type labels (e.g. Bushfire to Wildfire)
+  label = response_mapping(prelim)
   
   return label
   
+
+def response_mapping(text):
+    # Set default value
+    response = "Unknown"
+
+    #Check if key exists in the text
+    for key, value in cfg.Configuration.response_mapping.items():
+       if key in text:
+        response = value
+        break
+    
+    return response
+
 
 def _get_country_name(text):
     for country in pycountry.countries:
@@ -155,7 +200,7 @@ def _find_country_name(text):
     return country
 
 
-def _clean_info_type_text(text, chars_to_remove=[".", "#"]):
+def _clean_text(text, chars_to_remove=[".", "#"]):
   pattern="[" + "".join(chars_to_remove) + "]"
   result=re.sub(pattern, '', text)
   return result
@@ -164,3 +209,17 @@ def _clean_info_type_text(text, chars_to_remove=[".", "#"]):
 def _get_position(text, search_str):
    pos=text.find(search_str)
    return pos
+
+
+def _singular_label(text):
+    
+    # Create an instance of the inflect engine
+    p = inflect.engine()
+    
+    # Convert a plural word to a singular word
+    output = p.singular_noun(text) or text
+
+    # Change sentence case
+    output = output.capitalize()
+
+    return output
